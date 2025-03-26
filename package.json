@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.3",
+    "archiver": "^7.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "fast-csv": "^5.0.2",
+    "googleapis": "^148.0.0",
+    "iconv-lite": "^0.6.3",
+    "json2csv": "^6.0.0-alpha.2"
+  },
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "seed": "node migrations/seed-database.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@faker-js/faker": "^9.6.0"
+  }
+}
