@@ -95,6 +95,20 @@ const queryDatabase = async (table, filters) => {
   }
 };
 
+app.get('/vendedores/:id', async (req, res) => {
+  try {
+    const vendedor = await queryDatabase('vendedores', [{ column: 'id', operator: 'eq', value: req.params.id }]);
+    res.json(vendedor);
+  } catch (error) {
+    console.error('Erro na rota /vendedores/:id:', error);
+    res.status(500).json({ 
+      error: 'Erro ao buscar vendedor',
+      message: error.message 
+    });
+  }
+});
+
+
 app.get('/vendas', async (req, res) => {
   try {
     const { vendedor_id, equipe_id, data_inicio, data_fim } = req.query;
@@ -150,6 +164,39 @@ app.get('/produto/:id', async (req, res) => {
     });
   }
 });
+
+app.get('/equipe/:id', async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).json({
+        error: 'ID não fornecido', 
+        message: 'O ID da equipe é obrigatório'
+      });
+    }
+
+    const vendedores = await queryDatabase('vendedores', [
+      { column: 'equipe_id', operator: 'eq', value: req.params.id }
+    ]);
+
+    if (!vendedores || vendedores.length === 0) {
+      return res.status(404).json({
+        error: 'Vendedores não encontrados',
+        message: 'Nenhum vendedor encontrado para esta equipe'
+      });
+    }
+
+    res.json(vendedores);
+  } catch (error) {
+    console.error('Erro na rota /equipe/:id:', error);
+    res.status(500).json({
+      error: 'Erro ao buscar vendedores da equipe',
+      message: error.message
+    });
+  }
+
+});
+
+
 
 app.get('/equipes/:id/desempenho', async (req, res) => {
   try {
