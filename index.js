@@ -324,7 +324,7 @@ const gerarCSVCombinado = async () => {
       throw new Error('Erro ao buscar dados do banco de dados');
     }
 
-    const filePath = path.join(__dirname, 'metas_combinadas.csv');
+    const filePath = path.join('/', 'metas_combinadas.csv');
     const ws = fs.createWriteStream(filePath, { encoding: 'utf8' });
     const csvStream = format({ headers: true, quote: '"' });
     csvStream.pipe(ws);
